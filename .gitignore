@@ -3,4 +3,5 @@ learn-hpc/dist
 learn-hpc/.DS_Store
 learn-hpc/*.local
 learn-hpc/.vite
+learn-hpc
 
