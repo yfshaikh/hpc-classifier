@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0b0d12;
+  color: #e4e8f0;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Background: fine plotting grid + soft top vignette */
+.bg-graticule {
+  background-color: #0b0d12;
+  background-image:
+    linear-gradient(rgba(127, 182, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127, 182, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% -10%, rgba(109, 213, 150, 0.07), transparent 55%);
+  background-size: 26px 26px, 26px 26px, 100% 100%;
+}
+
+/* Subtle scanlines for that CRT-instrument feel */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.014) 0px,
+    rgba(255, 255, 255, 0.014) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0d1019;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a3145;
+  border-radius: 6px;
+  border: 2px solid #0d1019;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a435c;
+}
+
+/* Selection */
+::selection {
+  background: rgba(109, 213, 150, 0.32);
+  color: #fff;
+}
+
+/* Glow text */
+.text-glow-signal {
+  text-shadow: 0 0 14px rgba(109, 213, 150, 0.55);
+}
+.text-glow-attack {
+  text-shadow: 0 0 14px rgba(255, 93, 177, 0.55);
+}
+.text-glow-data {
+  text-shadow: 0 0 14px rgba(127, 182, 255, 0.55);
+}
+
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Default body line height inside lessons */
+.lesson p {
+  line-height: 1.72;
+}
+
+/* KaTeX-ish math styling (we render math as styled spans) */
+.math {
+  font-family: 'JetBrains Mono', monospace;
+  font-style: italic;
+  color: #a8cdff;
+}
