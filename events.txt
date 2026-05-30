@@ -1,0 +1,7 @@
+branch-misses - modern CPUs guess the path the code will take and speculatively load and execute instructions to be faster. if they miss, the CPU must start over. Since malware often included intentionally convoluted logic structures to confuse human analysts, I expect there to be a spike in branch misses
+
+cache-misses - To evade antivirus scanners, malware is often compressed or encrypted. When it executes, it must run an unpacking routine that constantly jumps to different, un-cached memory addresses to decrypt payload segments. I expect a jump in cache misses
+
+bus-cycles - Every time the malware triggers a cache-miss (as noted above), the CPU is forced to use the system bus to pull data from the RAM. More cache-misses automatically equal more bus-cycles.
+
+instructions - increase because malware is trying to encrypt user files
