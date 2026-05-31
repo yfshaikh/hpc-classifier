@@ -11,10 +11,11 @@ PROGRAM="$1"
 OUT="$2"
 
 # -I 1 means sample every 1ms
-# -x is csv separator
+# -x "," is csv separator
 # -e <4 events> 
 # -- $PROGRAM is the program to monitor
+# 2> "$OUT" means redirect stderr to the output file
 
-perf -I 1 -x -e 4 -- $PROGRAM | $OUT
+perf stat -I 1 -x "," -e branch-misses,cache-misses,bus-cycles,instructions -- "$PROGRAM" 2> "$OUT"
 
 echo "ran perf successfully"
