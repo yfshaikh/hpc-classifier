@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
-#define N 256
+#define N 64
 
 
 
