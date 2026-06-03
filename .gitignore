@@ -8,3 +8,4 @@ ignore/
 .vscode
 rc/__pycache__/
 
+workloads/bin/
