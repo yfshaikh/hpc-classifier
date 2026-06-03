@@ -5,4 +5,6 @@ learn-hpc/*.local
 learn-hpc/.vite
 learn-hpc
 ignore/
+.vscode
+rc/__pycache__/
 
