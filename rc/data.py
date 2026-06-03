@@ -17,8 +17,11 @@ def load_trace(csv_path):
     # 5. convert to numpy array, drop first N rows (startup transient)
     X = wide.to_numpy()
     X = X[5:]
+    # 5b. skip too-short / broken traces (perf-failure leftovers, etc.)
+    if len(X) < 20:
+        return None
     # 6. z-score normalize per column
-    X = (X - X.mean(axis=0)) / X.std(axis=0)   
+    X = (X - X.mean(axis=0)) / X.std(axis=0)
     # 7. return the (T-N, 4) array
     return X
 
@@ -29,11 +32,17 @@ def load_all_traces(root_dir):
     dirs = os.listdir(root_dir)
     classes = sorted(dirs)
     # 2. for each subdir, glob *.csv files
+    skipped = 0
     for i, cls in enumerate(classes):
         path_to_csv = os.path.join(root_dir, cls, "*.csv")
         for csv in glob.glob(path_to_csv):
-            traces.append(load_trace(csv))
+            trace = load_trace(csv)
+            if trace is None:
+                skipped += 1
+                continue
+            traces.append(trace)
             labels.append(i)
+    print(f"Loaded {len(traces)} traces ({skipped} short/broken CSVs skipped)")
     return traces, np.array(labels), classes
     # 3. for each CSV, call load_trace, append to traces list
     # 4. assign label = subdir index
