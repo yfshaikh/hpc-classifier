@@ -9,3 +9,8 @@ ignore/
 rc/__pycache__/
 
 workloads/bin/
+
+manim/media/
+manim/__pycache__/
+manim/scenes/__pycache__/
+manim/

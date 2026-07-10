@@ -8,16 +8,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 
-# sklearn — the standard Python machine-learning library.
 from sklearn.preprocessing  import StandardScaler        # zero-mean, unit-variance scaling
 from sklearn.linear_model   import LogisticRegression    # the actual classifier
 from sklearn.pipeline       import Pipeline              # chain preprocessing + classifier
 from sklearn.model_selection import cross_val_score      # k-fold cross-validation
 from sklearn.metrics        import confusion_matrix, classification_report
 
-# Our own modules under rc/
+
 from rc.data      import load_all_traces   # walks data/raw/, returns (traces, labels, class_names)
-from rc.features  import trace_features    # (T, N) reservoir state -> (3N,) feature vector
+from rc.features  import trace_features, featurize    # (T, N) reservoir state -> (3N,) feature vector
 from rc.reservoir import Reservoir         # implements Eq. 1 from the paper
 
 
@@ -37,12 +36,7 @@ def main():
     )
 
     # project each trace through the reservoir, then collapse to a feature vector
-    feature_vectors = []
-    for t in traces:
-        state = r.run(t)              # (T, N) reservoir state trajectory
-        f = trace_features(state)     # (3N,) feature vector: mean + std + last per neuron
-        feature_vectors.append(f)
-    X = np.stack(feature_vectors)     # (n_traces, 3N)
+    X = featurize(traces, r)
     y = labels
     print(f"Feature matrix shape: {X.shape}   (n_traces, 3*N)")
 
